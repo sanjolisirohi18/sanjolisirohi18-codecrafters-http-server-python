@@ -1,8 +1,13 @@
 import socket  # noqa: F401
 
 def get_http_request(data: str) -> str:
-    data_split = data.split(" ")
+    data_split = data.split("\n")
     print(f"data_split: {data_split} \n")
+
+    # Request Line
+    # method: str = data_split[0]
+    # request_target: str = data_split[1]
+
 
 def get_http_response() -> bytes:
     version: str = "HTTP/1.1"
