@@ -28,14 +28,16 @@ def get_http_response(data: str) -> bytes:
     print(f"http request: {get_http_request(data)}")
     # status_code: int, reason_phrase: str = get_http_request(data)
 
-    # status_line: str = f"{version} {status_code} {reason_phrase}\r\n"
+    status_code: int = 200
+    reason_phrase: str = "OK"
+    status_line: str = f"{version} {status_code} {reason_phrase}\r\n"
 
-    # header: str = ""
-    # headers: str = f"{header}\r\n"
+    header: str = ""
+    headers: str = f"{header}\r\n"
 
-    # response: str = f"{status_line}{headers}"
+    response: str = f"{status_line}{headers}"
 
-    # return response.encode()
+    return response.encode()
 
 
 def main():
