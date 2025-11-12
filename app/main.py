@@ -7,6 +7,7 @@ def response_status_line(url_path: str) -> Tuple[int, str, int, str]:
     content_length: int = 0
     body: str = ""
     url_path_split = url_path.split("/")
+    print(f"orl path split: {url_path_split} \n")
 
     if len(url_path_split) == 0:
         status_code = 200
