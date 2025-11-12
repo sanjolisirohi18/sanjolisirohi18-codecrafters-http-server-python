@@ -16,7 +16,7 @@ def response_status_line(url_path: str) -> Tuple[int, str, int, str]:
         status_code = 200
         reason_phrase = "OK"
         content_length = len(url_path_split[1])
-        body = url_path_split[1]
+        body = url_path_split[2]
     else:
         status_code = 404
         reason_phrase = "Not Found"
