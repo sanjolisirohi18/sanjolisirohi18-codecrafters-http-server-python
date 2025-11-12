@@ -49,17 +49,17 @@ def get_http_response(data: str) -> bytes:
     version: str = "HTTP/1.1"
     status_code, reason_phrase, content_length, body = get_http_request(data)
 
-    status_line: str = f"{version} {status_code} {reason_phrase}\r\n"
+    status_line: str = f"{version} {status_code} {reason_phrase}"
 
     header: str = ""
-    headers: str = f"{header}\r\n"
+    headers: str = f"{header}"
 
     if content_length > 0:
-        headers = f"Content-Type: text/plain\r\nContent-Length: {content-length}\r\n\r\n"
+        headers = f"Content-Type: text/plain\r\nContent-Length: {content_length}\r\n"
     
-    response_body: str = f"{body}\r\n"
+    response_body: str = f"{body}"
 
-    response: str = f"{status_line}{headers}{response_body}"
+    response: str = f"{status_line}\r\n{headers}\r\n{response_body}\r\n"
 
     return response.encode()
 
