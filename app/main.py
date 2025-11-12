@@ -25,6 +25,7 @@ def get_http_response(data: str) -> bytes:
     version: str = "HTTP/1.1"
     # status_code: int = request_status
     # reason_phrase: int = "OK"
+    print(f"http request: {get_http_request(data)}")
     status_code: int, reason_phrase: str = get_http_request(data)
 
     status_line: str = f"{version} {status_code} {reason_phrase}\r\n"
