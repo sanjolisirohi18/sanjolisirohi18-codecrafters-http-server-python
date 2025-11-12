@@ -1,6 +1,8 @@
 import socket  # noqa: F401
 
-#def get_http_request()
+def get_http_request(data: str) -> str:
+    data_split = data.split(" ")
+    print(f"data_split: {data_split} \n")
 
 def get_http_response() -> bytes:
     version: str = "HTTP/1.1"
@@ -27,6 +29,7 @@ def main():
     conn, addr = server_socket.accept() # wait for client
     data = conn.recv(1024).decode()
     print(f"data: {data} \n")
+    get_http_request(data)
     conn.sendall(get_http_response())
 
 
