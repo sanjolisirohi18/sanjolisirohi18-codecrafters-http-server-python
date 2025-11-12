@@ -9,10 +9,10 @@ def response_status_line(url_path: str) -> Tuple[int, str, int, str]:
     url_path_split = url_path.split("/")
     print(f"orl path split: {url_path_split} \n")
 
-    if len(url_path_split) == 0:
+    if len(url_path_split) > 1:
         status_code = 200
         reason_phrase = "OK"
-    elif url_path_split[0] == "echo":
+    elif url_path_split[1] == "echo":
         status_code = 200
         reason_phrase = "OK"
         content_length = len(url_path_split[1])
