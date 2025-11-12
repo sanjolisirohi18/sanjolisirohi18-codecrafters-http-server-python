@@ -1,6 +1,28 @@
 import socket  # noqa: F401
+from typing import Tuple
 
-def get_http_request(data: str) -> str:
+def response_status_line(url_path: str) -> Tuple[int, str, int, str]:
+    status_code: int = 0
+    reason_phrase: str = ""
+    content_length: int = 0
+    body: str = ""
+    url_path_split = url_path.split("/")
+
+    if len(url_path_split) == 0:
+        status_code = 200
+        reason_phrase = "OK"
+    elif url_path_split[0] == "echo":
+        status_code = 200
+        reason_phrase = "OK"
+        content_length = len(url_path_split[1])
+        body = url_path_split[1]
+    else:
+        status_code = 404
+        reason_phrase = "Not Found"
+    
+    return status_code, reason_phrase, content_length, body
+
+def get_http_request(data: str) -> Tuple[int, str, int]:
     data_split = data.split("\n")
     print(f"data_split: {data_split} \n")
 
@@ -10,30 +32,33 @@ def get_http_request(data: str) -> str:
     print(f"method: {method} \n")
     request_target: str = request_line[1]
     print(f"request_target: {request_target} \n")
+    print(f"response_status_line: {response_status_line(request_target)} \n")
 
-    status_code: int = 200
-    reason_phrase: str = "OK"
+    # status_code: int = 200
+    # reason_phrase: str = "OK"
 
-    if request_target[-1] != "/":
-        status_code = 404
-        reason_phrase = "Not Found"
+    # if request_target[-1] != "/":
+    #     status_code = 404
+    #     reason_phrase = "Not Found"
     
-    return status_code, reason_phrase
+    return response_status_line(request_target)
 
 
 def get_http_response(data: str) -> bytes:
     version: str = "HTTP/1.1"
-    # status_code: int = request_status
-    # reason_phrase: int = "OK"
-    print(f"http request: {get_http_request(data)}")
-    status_code, reason_phrase = get_http_request(data)
+    status_code, reason_phrase, content_length, body = get_http_request(data)
 
     status_line: str = f"{version} {status_code} {reason_phrase}\r\n"
 
     header: str = ""
     headers: str = f"{header}\r\n"
 
-    response: str = f"{status_line}{headers}"
+    if content_length > 0:
+        headers = f"Content-Type: text/plain\r\nContent-Length: {content-length}\r\n\r\n"
+    
+    response_body: str = f"{body}\r\n"
+
+    response: str = f"{status_line}{headers}{response_body}"
 
     return response.encode()
 
