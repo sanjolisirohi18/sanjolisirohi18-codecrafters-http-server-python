@@ -1,7 +1,7 @@
 import socket  # noqa: F401
 
 def get_http_request(data: str) -> str:
-    data_split = data.split("\n")
+    data_split = data.split("\r")
     print(f"data_split: {data_split} \n")
 
     # Request Line
