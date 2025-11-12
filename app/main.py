@@ -7,7 +7,7 @@ def response_status_line(url_path: str) -> Tuple[int, str, int, str]:
     content_length: int = 0
     body: str = ""
     url_path_split = url_path.split("/")
-    print(f"orl path split: {url_path_split} \n")
+    print(f"url path split: {url_path_split} \n")
 
     if url_path_split[-1] == "":
         status_code = 200
@@ -33,14 +33,6 @@ def get_http_request(data: str) -> Tuple[int, str, int]:
     print(f"method: {method} \n")
     request_target: str = request_line[1]
     print(f"request_target: {request_target} \n")
-    print(f"response_status_line: {response_status_line(request_target)} \n")
-
-    # status_code: int = 200
-    # reason_phrase: str = "OK"
-
-    # if request_target[-1] != "/":
-    #     status_code = 404
-    #     reason_phrase = "Not Found"
     
     return response_status_line(request_target)
 
@@ -52,10 +44,11 @@ def get_http_response(data: str) -> bytes:
     status_line: str = f"{version} {status_code} {reason_phrase}"
 
     header: str = ""
+    content_type: str = "text/plain"
     headers: str = f"{header}"
 
     if content_length > 0:
-        headers = f"Content-Type: text/plain\r\nContent-Length: {content_length}\r\n"
+        headers = f"Content-Type: {content_type}\r\nContent-Length: {content_length}\r\n"
     
     response_body: str = f"{body}"
 
