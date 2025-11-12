@@ -15,7 +15,7 @@ def response_status_line(url_path: str) -> Tuple[int, str, int, str]:
     elif url_path_split[1] == "echo":
         status_code = 200
         reason_phrase = "OK"
-        content_length = len(url_path_split[1])
+        content_length = len(url_path_split[2])
         body = url_path_split[2]
     else:
         status_code = 404
