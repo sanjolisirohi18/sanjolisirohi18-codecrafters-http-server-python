@@ -1,6 +1,6 @@
 import socket  # noqa: F401
 
-def get_http_request()
+#def get_http_request()
 
 def get_http_response() -> bytes:
     version: str = "HTTP/1.1"
