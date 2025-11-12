@@ -5,8 +5,11 @@ def get_http_request(data: str) -> str:
     print(f"data_split: {data_split} \n")
 
     # Request Line
-    # method: str = data_split[0]
-    # request_target: str = data_split[1]
+    request_line = data_split[0].split(" ")
+    method: str = request_line[0]
+    print(f"method: {method} \n")
+    request_target: str = request_line[1]
+    print(f"request_target: {request_target} \n")
 
 
 def get_http_response() -> bytes:
