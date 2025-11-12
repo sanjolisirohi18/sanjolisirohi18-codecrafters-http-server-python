@@ -11,11 +11,21 @@ def get_http_request(data: str) -> str:
     request_target: str = request_line[1]
     print(f"request_target: {request_target} \n")
 
-
-def get_http_response() -> bytes:
-    version: str = "HTTP/1.1"
     status_code: int = 200
-    reason_phrase: int = "OK"
+    reason_phrase: str = "OK"
+
+    if request_target[-1] != "/":
+        status_code = 404
+        reason_phrase = "Not Found"
+    
+    return status_code, reason_phrase
+
+
+def get_http_response(data: str) -> bytes:
+    version: str = "HTTP/1.1"
+    # status_code: int = request_status
+    # reason_phrase: int = "OK"
+    status_code: int, reason_phrase: str = get_http_request(data)
 
     status_line: str = f"{version} {status_code} {reason_phrase}\r\n"
 
@@ -37,8 +47,8 @@ def main():
     conn, addr = server_socket.accept() # wait for client
     data = conn.recv(1024).decode()
     print(f"data: {data} \n")
-    get_http_request(data)
-    conn.sendall(get_http_response())
+    #get_http_request(data)
+    conn.sendall(get_http_response(data))
 
 
 if __name__ == "__main__":
