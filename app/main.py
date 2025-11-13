@@ -2,11 +2,15 @@ import socket  # noqa: F401
 from typing import Tuple, Optional
 
 def get_request_user_agent(user_agent: str) -> Tuple[str, str]:
+    """ Extracts User Agent from HTTP Request """
     user_agent_split = user_agent.split(" ")
     print(f"user_agent_split: {user_agent_split}")
+    body: str = user_agent_split[1][:-2]
+    print(f"body: {body}")
 
 
 def response_status_line(url_path: str, **kwargs) -> Tuple[int, str, int, str]:
+    """ Creates HTTP REsponse - status code, reason phrase, content length and response body"""
     status_code: int = 0
     reason_phrase: str = ""
     content_length: int = 0
@@ -24,7 +28,9 @@ def response_status_line(url_path: str, **kwargs) -> Tuple[int, str, int, str]:
         content_length = len(url_path_split[2])
         body = url_path_split[2]
     elif url_path_split[1] == "user-agent":
-        get_request_user_agent(user_agent)
+        status_code = 200
+        reason_phrase = "OK"
+        content_length, body = get_request_user_agent(user_agent)
     else:
         status_code = 404
         reason_phrase = "Not Found"
@@ -32,6 +38,7 @@ def response_status_line(url_path: str, **kwargs) -> Tuple[int, str, int, str]:
     return status_code, reason_phrase, content_length, body
 
 def get_http_request(data: str) -> Tuple[int, str, int]:
+    """ Creates HTTP Request """
     data_split = data.split("\n")
     print(f"data_split: {data_split} \n")
 
@@ -46,6 +53,8 @@ def get_http_request(data: str) -> Tuple[int, str, int]:
 
 
 def get_http_response(data: str) -> bytes:
+    """ Creates HTTP Response """
+
     version: str = "HTTP/1.1"
     status_code, reason_phrase, content_length, body = get_http_request(data)
 
