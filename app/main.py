@@ -6,11 +6,12 @@ def get_request_user_agent(user_agent: str) -> Tuple[str, str]:
     print(f"user_agent_split: {user_agent_split}")
 
 
-def response_status_line(url_path: str, user_agent: Optional[str]) -> Tuple[int, str, int, str]:
+def response_status_line(url_path: str, **kwargs) -> Tuple[int, str, int, str]:
     status_code: int = 0
     reason_phrase: str = ""
     content_length: int = 0
     body: str = ""
+    user_agent: str = kwargs.get('user_agent', None)
     url_path_split = url_path.split("/")
     print(f"url path split: {url_path_split} \n")
 
