@@ -1,13 +1,14 @@
 import socket  # noqa: F401
 from typing import Tuple, Optional
 
-def get_request_user_agent(user_agent: str) -> Tuple[str, str]:
+def get_request_user_agent(user_agent: str) -> Tuple[int, str]:
     """ Extracts User Agent from HTTP Request """
     user_agent_split = user_agent.split(" ")
     print(f"user_agent_split: {user_agent_split}")
-    body: str = user_agent_split[1][:-2]
+    body: str = user_agent_split[1][:-1]
     print(f"body: {body}")
 
+    return len(body), body
 
 def response_status_line(url_path: str, **kwargs) -> Tuple[int, str, int, str]:
     """ Creates HTTP REsponse - status code, reason phrase, content length and response body"""
