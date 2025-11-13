@@ -12,7 +12,7 @@ def response_status_line(url_path: str) -> Tuple[int, str, int, str]:
     if url_path_split[-1] == "":
         status_code = 200
         reason_phrase = "OK"
-    elif url_path_split[1] == "echo":
+    elif url_path_split[1] == "echo" or url_path_split[1] == "user-agent":
         status_code = 200
         reason_phrase = "OK"
         content_length = len(url_path_split[2])
