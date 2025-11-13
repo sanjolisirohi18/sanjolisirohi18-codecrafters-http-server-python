@@ -42,7 +42,7 @@ def get_http_request(data: str) -> Tuple[int, str, int]:
     request_target: str = request_line[1]
     print(f"request_target: {request_target} \n")
     
-    return response_status_line(request_target)
+    return response_status_line(request_target, data_split[2])
 
 
 def get_http_response(data: str) -> bytes:
