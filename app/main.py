@@ -1,7 +1,12 @@
 import socket  # noqa: F401
-from typing import Tuple
+from typing import Tuple, Optional
 
-def response_status_line(url_path: str) -> Tuple[int, str, int, str]:
+def get_request_user_agent(user_agent: str) -> Tuple[str, str]:
+    user_agent_split = user_agent.split(" ")
+    print(f"user_agent_split: {user_agent_split}")
+
+
+def response_status_line(url_path: str, user_agent: Optional[str]) -> Tuple[int, str, int, str]:
     status_code: int = 0
     reason_phrase: str = ""
     content_length: int = 0
@@ -12,11 +17,13 @@ def response_status_line(url_path: str) -> Tuple[int, str, int, str]:
     if url_path_split[-1] == "":
         status_code = 200
         reason_phrase = "OK"
-    elif url_path_split[1] == "echo" or url_path_split[1] == "user-agent":
+    elif url_path_split[1] == "echo":
         status_code = 200
         reason_phrase = "OK"
         content_length = len(url_path_split[2])
         body = url_path_split[2]
+    elif url_path_split[1] == "user-agent":
+        get_request_user_agent(user_agent)
     else:
         status_code = 404
         reason_phrase = "Not Found"
