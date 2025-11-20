@@ -75,6 +75,19 @@ def get_http_response(data: str) -> bytes:
 
     return response.encode()
 
+def handle_client(conn, addr):
+    print(f"Connected by addr: {addr}")
+
+    while True:
+        data = conn.recv(1024).decode()
+        print(f"data: {data} \n")
+        #get_http_request(data)
+        if not data:
+            break
+
+        conn.sendall(get_http_response(data))
+        print(f"Connection from {addr} closed")
+        conn.close()
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -84,11 +97,14 @@ def main():
     #
     server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
     conn, addr = server_socket.accept() # wait for client
-    data = conn.recv(1024).decode()
-    print(f"data: {data} \n")
+    client_thread = threading.Thread(target=handle_client, args=(conn, addr))
+    client_thread.start()
+
+    # data = conn.recv(1024).decode()
+    # print(f"data: {data} \n")
     #get_http_request(data)
-    conn.sendall(get_http_response(data))
-    conn.close()
+    # conn.sendall(get_http_response(data))
+    # conn.close()
 
 
 if __name__ == "__main__":
