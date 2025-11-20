@@ -86,8 +86,8 @@ def handle_client(conn, addr):
             break
 
         conn.sendall(get_http_response(data))
-        print(f"Connection from {addr} closed")
-        conn.close()
+        # print(f"Connection from {addr} closed")
+        # conn.close()
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
