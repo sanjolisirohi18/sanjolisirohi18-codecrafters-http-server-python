@@ -94,12 +94,12 @@ def main():
     #
     server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
     conn, addr = server_socket.accept() # wait for client
-    # client_thread = threading.Thread(target=handle_client, args=(conn, addr))
-    # client_thread.start()
+    client_thread = threading.Thread(target=handle_client, args=(conn, addr))
+    client_thread.start()
 
-    data = conn.recv(1024).decode()
-    print(f"data: {data} \n")
-    conn.sendall(get_http_response(data))
+    # data = conn.recv(1024).decode()
+    # print(f"data: {data} \n")
+    # conn.sendall(get_http_response(data))
     # conn.close()
 
 
