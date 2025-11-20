@@ -78,16 +78,13 @@ def get_http_response(data: str) -> bytes:
 def handle_client(conn, addr):
     print(f"Connected by addr: {addr}")
 
-    while True:
-        data = conn.recv(1024).decode()
-        print(f"data: {data} \n")
-        #get_http_request(data)
-        if not data:
-            break
+    #while True:
+    data = conn.recv(1024).decode()
+    print(f"data: {data} \n")
 
-        conn.sendall(get_http_response(data))
-        # print(f"Connection from {addr} closed")
-        # conn.close()
+    conn.sendall(get_http_response(data))
+    # print(f"Connection from {addr} closed")
+    # conn.close()
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
