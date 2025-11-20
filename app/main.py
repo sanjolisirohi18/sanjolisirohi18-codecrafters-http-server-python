@@ -1,5 +1,6 @@
 import socket  # noqa: F401
 from typing import Tuple, Optional
+import threading
 
 def get_request_user_agent(user_agent: str) -> Tuple[int, str]:
     """ Extracts User Agent from HTTP Request """
@@ -87,6 +88,7 @@ def main():
     print(f"data: {data} \n")
     #get_http_request(data)
     conn.sendall(get_http_response(data))
+    conn.close()
 
 
 if __name__ == "__main__":
