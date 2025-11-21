@@ -127,7 +127,7 @@ def main():
     directory_path = Path(".")
     # #directory_path = Path(sys.argv[-1])
 
-    if len(sys.argv) > 2 and sys.argv[1] == "directory":
+    if len(sys.argv) > 2 and sys.argv[1] == "--directory":
         directory_path = sys.argv[2]
     
     print(f"Serving files from directory: {directory_path}")
