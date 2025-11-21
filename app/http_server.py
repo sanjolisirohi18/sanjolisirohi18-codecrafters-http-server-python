@@ -34,7 +34,7 @@ class HttpServer:
             # # conn.sendall(get_http_response(data))
             # conn.close()
             # 1. Parse Request
-            request = HttpRequest(raw_data)
+            request = HttpRequest.from_raw_data(raw_data)
             
             # 2. Route and Get Response
             response = self.router.route(request)
