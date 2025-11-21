@@ -6,7 +6,7 @@ import sys
 from typing import Tuple
 from pathlib import Path
 
-from http_server import HttpServer
+from .http_server import HttpServer
 
 def get_request_user_agent(user_agent: str) -> Tuple[int, str]:
     """ Extracts User Agent from HTTP Request """
