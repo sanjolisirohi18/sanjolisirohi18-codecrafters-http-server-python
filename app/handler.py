@@ -34,7 +34,7 @@ def handle_files(request: HttpRequest, directory: Path) -> HttpResponse:
             with open(file_path, 'r') as f:
                 content = f.read()
 
-                return HttpResponse(status_code=200, body=content, content_type="application/octet-stream")
+            return HttpResponse(status_code=200, body=content, content_type="application/octet-stream")
         except IOError:
             return HttpResponse(status_code=500, body="Internal Server Error")
     else:
