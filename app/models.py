@@ -51,7 +51,7 @@ class HttpResponse:
         status_line = f"HTTP/1.1 {self.status_code} {self.reason_phrase}\r\n"
         
         headers = ""
-        print(f"self.content_lenght: {self.content_length}")
+        print(f"body: {self.body}")
         if self.content_length > 0:
             headers += f"Content-Type: {self.content_type}\r\n"
             headers += f"Content-Length: {self.content_length}\r\n"
