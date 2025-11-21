@@ -30,6 +30,7 @@ def handle_files(request: HttpRequest, directory: Path) -> HttpResponse:
         return HttpResponse(status_code=400, body="Bad Request: Missing filename")
     
     if file_path.is_file():
+        print(f"file_path exists: {file_path}")
         try:
             with open(file_path, 'r') as f:
                 content = f.read()
