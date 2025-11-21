@@ -123,7 +123,7 @@ def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
     print("Logs from your program will appear here!")
 
-    # print(f"Input arguments: {sys.argv}\n")
+    print(f"Input arguments: {sys.argv}\n")
     directory_path = Path(".")
     # #directory_path = Path(sys.argv[-1])
 
