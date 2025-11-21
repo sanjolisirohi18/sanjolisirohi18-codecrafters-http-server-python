@@ -26,6 +26,7 @@ def handle_files(request: HttpRequest, directory: Path) -> HttpResponse:
     try:
         file_name = request.path.split("/", 2)[2]
         file_path = directory / file_name
+        print(f"file path: {file_path}")
     except IndexError:
         return HttpResponse(status_code=400, body="Bad Request: Missing filename")
     
