@@ -5,10 +5,12 @@ from .models import HttpRequest, HttpResponse
 # Handler Functions
 def handle_root(request: HttpRequest) -> HttpResponse:
     """ Handler for GET / """
+    print("handle root called")
     return HttpResponse(status_code=200, body="")
 
 def handle_echo(request: HttpRequest) -> HttpResponse:
     """ Handler for GET /echo/<message> """
+    print("hable echo called")
     path_parts = request.path.split("/", 2)
     message = path_parts[2] if len(path_parts) > 2 else ""
 
@@ -16,6 +18,7 @@ def handle_echo(request: HttpRequest) -> HttpResponse:
 
 def handle_user_agent(request: HttpRequest) -> HttpResponse:
     """ Handler for GET /user-agent """
+    print("handle user agent called")
     user_agent = request.headers.get("User-Agent", "")
 
     return HttpResponse(status_code=200, body=user_agent)
