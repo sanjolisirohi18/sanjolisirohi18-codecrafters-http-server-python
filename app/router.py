@@ -2,8 +2,8 @@ from ast import Call
 from pathlib import Path
 from typing import Dict, Callable
 
-from models import HttpRequest, HttpResponse
-from handler import (
+from .models import HttpRequest, HttpResponse
+from .handler import (
     handle_root,
     handle_echo,
     handle_user_agent,

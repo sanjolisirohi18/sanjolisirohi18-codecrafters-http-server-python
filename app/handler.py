@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from models import HttpRequest, HttpResponse
+from .models import HttpRequest, HttpResponse
 
 # Handler Functions
 def handle_root(request: HttpRequest) -> HttpResponse:

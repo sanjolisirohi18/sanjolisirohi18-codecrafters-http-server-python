@@ -3,8 +3,8 @@ import threading
 from typing import Tuple
 from pathlib import Path
 
-from router import Router
-from models import HttpRequest
+from .router import Router
+from .models import HttpRequest
 
 class HttpServer:
     """ The main server orchestrator handling socket connections. """
