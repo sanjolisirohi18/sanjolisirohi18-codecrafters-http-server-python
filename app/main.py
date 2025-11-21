@@ -2,8 +2,9 @@
 import socket  # noqa: F401
 import threading
 import sys
-from typing import Tuple
 
+from typing import Tuple
+from pathlib import Path
 
 def get_request_user_agent(user_agent: str) -> Tuple[int, str]:
     """ Extracts User Agent from HTTP Request """
@@ -121,6 +122,8 @@ def main():
     # TODO: Uncomment the code below to pass the first stage
     #
     print(f"Input arguments: {sys.argv}\n")
+    file_path = Path(sys.argv[-1])
+    print(f"file_path: {file_path} \n")
     server_address = ("localhost", 4221)
     server_socket = socket.create_server(server_address, reuse_port=True)
     print(f"Server listening on {server_address}")
