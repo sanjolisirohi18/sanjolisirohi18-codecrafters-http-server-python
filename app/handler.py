@@ -22,7 +22,7 @@ def handle_user_agent(request: HttpRequest) -> HttpResponse:
 
 def handle_files(request: HttpRequest, directory: Path) -> HttpResponse:
     """ Handler for GET /files/<filename> """
-
+    print("handle files called")
     try:
         file_name = request.path.split("/", 2)[2]
         file_path = directory / file_name
