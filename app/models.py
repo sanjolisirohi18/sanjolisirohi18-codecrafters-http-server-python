@@ -10,7 +10,7 @@ class HttpRequest:
         lines = raw_data.split("\r\n")
 
         # Parse request line
-        request_line_parts = lines[0].aplit(" ")
+        request_line_parts = lines[0].split(" ")
         method = request_line_parts[0]
         path = request_line_parts[1]
 
