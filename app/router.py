@@ -26,10 +26,14 @@ class Router:
         print(f"request path: {request.path}")
         # 1. Check exact matches
         if request.path in self.routes:
+            print("check exact match")
             return self.routes[request.path](request)
         
         # 2. Check dynamic prefix matches
         for prefix, handler in self.routes.items():
+            print("check dynamic prefix")
+            print(f"prefix: {prefix}")
+            print(f"handler: {handler}")
             if prefix.endswith("/") and request.path.startswith(prefix):
                 return handler(request)
         
