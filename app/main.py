@@ -1,7 +1,9 @@
 #from shutil import ExecError
 import socket  # noqa: F401
-from typing import Tuple, Optional
 import threading
+import sys
+from typing import Tuple
+
 
 def get_request_user_agent(user_agent: str) -> Tuple[int, str]:
     """ Extracts User Agent from HTTP Request """
@@ -103,7 +105,7 @@ def handle_client(conn, addr):
         print(f"data: {data} \n")
 
         conn.sendall(get_http_response(data))
-        conn.sendall(get_http_response(data))
+        # conn.sendall(get_http_response(data))
         conn.close()
     except Exception as e:
         print(f"Error handling client: {e}")
@@ -118,6 +120,7 @@ def main():
 
     # TODO: Uncomment the code below to pass the first stage
     #
+    print(f"Input arguments: {sys.argv}\n")
     server_address = ("localhost", 4221)
     server_socket = socket.create_server(server_address, reuse_port=True)
     print(f"Server listening on {server_address}")
