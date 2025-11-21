@@ -6,6 +6,8 @@ import sys
 from typing import Tuple
 from pathlib import Path
 
+from http_server import HttpServer
+
 def get_request_user_agent(user_agent: str) -> Tuple[int, str]:
     """ Extracts User Agent from HTTP Request """
     try:
@@ -41,6 +43,8 @@ def response_status_line(url_path: str, **kwargs) -> Tuple[int, str, int, str]:
             status_code = 200
             reason_phrase = "OK"
             content_length, body = get_request_user_agent(user_agent)
+        elif url_path_split[1] == "files":
+            pass
         else:
             status_code = 404
             reason_phrase = "Not Found"
@@ -119,32 +123,40 @@ def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
     print("Logs from your program will appear here!")
 
-    # TODO: Uncomment the code below to pass the first stage
-    #
-    print(f"Input arguments: {sys.argv}\n")
-    file_path = Path(sys.argv[-1])
-    print(f"file_path: {file_path} \n")
-    server_address = ("localhost", 4221)
-    server_socket = socket.create_server(server_address, reuse_port=True)
-    print(f"Server listening on {server_address}")
+    # print(f"Input arguments: {sys.argv}\n")
+    # directory_path = Path(".")
+    # #directory_path = Path(sys.argv[-1])
 
-    while True:
-        try:
-            conn, addr = server_socket.accept() # wait for client
-            client_thread = threading.Thread(
-                target=handle_client, 
-                args=(conn, addr)
-            )
-            client_thread.start()
-        except Exception as e:
-            print(f"Error acception connection: {e}")
-            break
+    if len(sys.argv) > 2 and sys.argv[1] == "directory":
+        directory_path = sys.argv[2]
+    
+    print(f"Serving files from directory: {directory_path}")
 
-    # data = conn.recv(1024).decode()
-    # print(f"data: {data} \n")
-    # conn.sendall(get_http_response(data))
-    # conn.close()
+    # Instantiate and start the server
+    server = HttpServer(
+        host="localhost",
+        port=4221,
+        directory=directory_path
+    )
+    server.start()
 
+
+
+    # server_address = ("localhost", 4221)
+    # server_socket = socket.create_server(server_address, reuse_port=True)
+    # print(f"Server listening on {server_address}")
+
+    # while True:
+    #     try:
+    #         conn, addr = server_socket.accept() # wait for client
+    #         client_thread = threading.Thread(
+    #             target=handle_client, 
+    #             args=(conn, addr)
+    #         )
+    #         client_thread.start()
+    #     except Exception as e:
+    #         print(f"Error acception connection: {e}")
+    #         break
 
 if __name__ == "__main__":
     main()
