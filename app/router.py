@@ -26,7 +26,7 @@ class Router:
         print(f"request path: {request.path}")
         print(f"self.routes: {self.routes} \n")
         # 1. Check exact matches
-        if request.path in self.routes:
+        if request.path in self.routes and request.path != "/":
             print("check exact match")
             return self.routes[request.path](request)
         
@@ -35,7 +35,7 @@ class Router:
             print("check dynamic prefix")
             print(f"prefix: {prefix}")
             print(f"handler: {handler}")
-            if prefix.endswith("/") and request.path.startswith(prefix):
+            if prefix != "/" and prefix.endswith("/") and request.path.startswith(prefix):
                 return handler(request)
         
         # 3. Default 404 handler
