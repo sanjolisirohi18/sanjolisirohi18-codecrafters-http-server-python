@@ -38,5 +38,10 @@ class Router:
             if prefix != "/" and prefix.endswith("/") and request.path.startswith(prefix):
                 return handler(request)
         
+        # 4. Handle the Root Path
+        if request.path == "/":
+            print(f"root path match")
+            return self.routes[request.path](request)
+        
         # 3. Default 404 handler
         return HttpResponse(status_code=404, body="404 Not Found")
