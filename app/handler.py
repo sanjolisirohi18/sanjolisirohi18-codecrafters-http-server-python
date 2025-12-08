@@ -27,6 +27,7 @@ def handle_files(request: HttpRequest, directory: Path) -> HttpResponse:
     """ Handler for GET /files/<filename> """
     print("handle files called")
     try:
+        print(f"request: {request}")
         file_name = request.path.split("/", 2)[2]
         file_path = directory / file_name
         print(f"file path: {file_path}")
