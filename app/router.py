@@ -24,6 +24,7 @@ class Router:
     def route(self, request: HttpRequest) -> HttpResponse:
         """ Dispatches the request to the correct handler based on the path."""
         print(f"request path: {request.path}")
+        print(f"self.routes: {self.routes} \n")
         # 1. Check exact matches
         if request.path in self.routes:
             print("check exact match")
