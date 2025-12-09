@@ -22,7 +22,7 @@ class HttpServer:
 
         try:
             #Receive data from client
-            raw_data = conn.recv(1024).decode()
+            raw_data = conn.recv(2024).decode()
 
             if not raw_data: 
                 print(f"No data received from {addr}")
@@ -30,9 +30,6 @@ class HttpServer:
             
             print(f"data: {raw_data} \n")
 
-            # conn.sendall(get_http_response(data))
-            # # conn.sendall(get_http_response(data))
-            # conn.close()
             # 1. Parse Request
             request = HttpRequest.from_raw_data(raw_data)
             
