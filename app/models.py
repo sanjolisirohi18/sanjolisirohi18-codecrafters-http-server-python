@@ -26,7 +26,7 @@ class HttpRequest:
             }
 
         # Parse body
-        body = ""
+        body = lines[-1] if len(lines)[-1] > 0 else ""
 
         return cls(method=method, path=path, headers=headers, body=body)
 
