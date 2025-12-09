@@ -35,8 +35,11 @@ class HttpResponse:
         self.status_code = status_code
         self.reason_phrase = {
             200: "OK",
+            201: "Created",
+            400: "Bad Request",
             404: "Not Found",
             405: "Method Not Allowed",
+            500: "Internal Server Error",
             501: "Not Implemented"
         }.get(status_code, "Unknown")
         self.body = body
