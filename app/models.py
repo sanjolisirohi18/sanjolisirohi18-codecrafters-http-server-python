@@ -8,7 +8,7 @@ class HttpRequest:
     @classmethod
     def from_raw_data(cls, raw_data:str) -> 'HttpRequest':
         lines = raw_data.split("\r\n")
-        print(f"lines: {lines}")
+        #print(f"lines: {lines}")
 
         # Parse request line
         request_line_parts = lines[0].split(" ")
@@ -21,7 +21,7 @@ class HttpRequest:
         if len(lines) > 1:
             headers = {
                 "Host": lines[1],
-                "User-Agent": lines[2]
+                "User-Agent": lines[2].split(" ")[1]
             }
         
         print(f"headers: {headers}")
