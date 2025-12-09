@@ -30,6 +30,7 @@ def handle_files(request: HttpRequest, directory: Path) -> HttpResponse:
     # Path extraction and validation
     try:
         print(f"request: {request}")
+        print(f"request body : {request.body}")
         file_name = request.path.split("/", 2)[2]
         file_path = Path(f"{directory}{file_name}")
     except IndexError:
