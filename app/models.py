@@ -9,6 +9,7 @@ class HttpRequest:
     def from_raw_data(cls, raw_data:str) -> 'HttpRequest':
         print(f"raw_data: {raw_data}")
         lines = raw_data.split("\r\n")
+        print(f"lines: {lines}")
 
         # Parse request line
         request_line_parts = lines[0].split(" ")
