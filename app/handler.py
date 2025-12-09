@@ -10,7 +10,7 @@ def handle_root(request: HttpRequest) -> HttpResponse:
 
 def handle_echo(request: HttpRequest) -> HttpResponse:
     """ Handler for GET /echo/<message> """
-    print("hable echo called")
+    print("handle echo called")
     path_parts = request.path.split("/", 2)
     message = path_parts[2] if len(path_parts) > 2 else ""
 
@@ -29,9 +29,7 @@ def handle_files(request: HttpRequest, directory: Path) -> HttpResponse:
     try:
         print(f"request: {request}")
         file_name = request.path.split("/", 2)[2]
-        print(f"file_name: {file_name}")
         file_path = Path(f"{directory}{file_name}")
-        print(f"file path: {file_path}")
     except IndexError:
         return HttpResponse(status_code=400, body="Bad Request: Missing filename")
     

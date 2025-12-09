@@ -23,8 +23,7 @@ class Router:
     
     def route(self, request: HttpRequest) -> HttpResponse:
         """ Dispatches the request to the correct handler based on the path."""
-        print(f"request path: {request.path}")
-        print(f"self.routes: {self.routes} \n")
+
         # 1. Check exact matches
         if request.path in self.routes and request.path != "/":
             print("check exact match")
@@ -33,14 +32,13 @@ class Router:
         # 2. Check dynamic prefix matches
         for prefix, handler in self.routes.items():
             print("check dynamic prefix")
-            print(f"prefix: {prefix}")
-            print(f"handler: {handler}")
+
             if prefix != "/" and prefix.endswith("/") and request.path.startswith(prefix):
                 return handler(request)
         
         # 4. Handle the Root Path
         if request.path == "/":
-            print(f"root path match")
+            print(f"check root match")
             return self.routes[request.path](request)
         
         # 3. Default 404 handler

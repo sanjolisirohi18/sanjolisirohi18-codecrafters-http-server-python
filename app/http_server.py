@@ -38,12 +38,6 @@ class HttpServer:
             
             # 2. Route and Get Response
             response = self.router.route(request)
-            print(f"http response: {response}\n")
-            print(f"response status_code: {response.status_code}")
-            print(f"response reason_phrase: {response.reason_phrase}")
-            print(f"response body: {response.body}")
-            print(f"response content_type: {response.content_type}")
-            print(f"response content_length: {response.content_length}")
 
             # 3. Send Response
             conn.sendall(response.to_bytes())
