@@ -1,10 +1,10 @@
 class HttpRequest:
-    def __init__(self, method: str, path: str, headers: dict, body: str):
+    def __init__(self, method: str, path: str, headers: dict, body: str, accept_encoding: str):
         self.method = method
         self.path = path
         self.headers = headers
         self.body = body
-        self.valid_content_encoding = ["gzip"]
+        self.accept_encoding = accept_encoding
     
     @classmethod
     def from_raw_data(cls, raw_data:str) -> 'HttpRequest':
@@ -24,7 +24,7 @@ class HttpRequest:
         print(f"accept_encoding: {accept_encoding}\n")
 
         if len(lines) > 1:
-            if header_data[0] == "Accept-Encoding":
+            if header_data[0] == "Accept-Encoding" and accept_encoding in ["gzip"]:
                 headers = {
                     "Host": lines[1],
                     "Accept-Encoding": lines[2]
@@ -41,7 +41,7 @@ class HttpRequest:
         # Parse body
         body = lines[-1] if len(lines[-1]) > 0 else ""
 
-        return cls(method=method, path=path, headers=headers, body=body)
+        return cls(method=method, path=path, headers=headers, body=body, accept_encoding=accept_encoding)
 
 class HttpResponse:
     """ Build and format the http response sent back to the client. """
