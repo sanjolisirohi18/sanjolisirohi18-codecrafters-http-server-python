@@ -20,6 +20,8 @@ class HttpRequest:
         headers = {}
         header_data = lines[2].split(":")
         print(f"header_data: {header_data}\n")
+        accept_encoding = header_data[1].strip()
+        print(f"accept_encoding: {accept_encoding}\n")
 
         if len(lines) > 1:
             if header_data[0] == "Accept-Encoding":
