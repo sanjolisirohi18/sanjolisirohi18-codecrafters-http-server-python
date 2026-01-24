@@ -4,6 +4,7 @@ class HttpRequest:
         self.path = path
         self.headers = headers
         self.body = body
+        self.valid_content_encoding = ["gzip"]
     
     @classmethod
     def from_raw_data(cls, raw_data:str) -> 'HttpRequest':
@@ -18,6 +19,7 @@ class HttpRequest:
         # Parse headers
         headers = {}
         header_data = lines[2].split(":")
+        print(f"header_data: {header_data}\n")
 
         if len(lines) > 1:
             if header_data[0] == "Accept-Encoding":
