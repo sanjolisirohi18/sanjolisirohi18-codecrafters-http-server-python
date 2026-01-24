@@ -21,7 +21,8 @@ class HttpRequest:
         if len(lines) > 1:
             headers = {
                 "Host": lines[1],
-                "User-Agent": lines[2].split(" ")[1] if len(lines[2]) > 0 else ''
+                #"User-Agent": lines[2].split(" ")[1] if len(lines[2]) > 0 else '',
+                "User-Agent": lines[2]
             }
         
         print(f"headers: {headers}\n")
