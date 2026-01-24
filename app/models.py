@@ -8,6 +8,7 @@ class HttpRequest:
     @classmethod
     def from_raw_data(cls, raw_data:str) -> 'HttpRequest':
         lines = raw_data.split("\r\n")
+        print(f"in==lines: {lines}\n")
 
         # Parse request line
         request_line_parts = lines[0].split(" ")
