@@ -17,13 +17,20 @@ class HttpRequest:
 
         # Parse headers
         headers = {}
+        header_data = lines[2].split(":")
 
         if len(lines) > 1:
-            headers = {
-                "Host": lines[1],
-                #"User-Agent": lines[2].split(" ")[1] if len(lines[2]) > 0 else '',
-                "User-Agent": lines[2]
-            }
+            if header_data[0] == "Accept-Encoding":
+                headers = {
+                    "Host": lines[1],
+                    "Accept-Encoding": lines[2]
+                }
+            else:
+                headers = {
+                    "Host": lines[1],
+                    #"User-Agent": lines[2].split(" ")[1] if len(lines[2]) > 0 else '',
+                    "User-Agent": lines[2]
+                }
         
         print(f"headers: {headers}\n")
 
@@ -49,6 +56,7 @@ class HttpResponse:
         self.body = body
         self.content_type = content_type
         self.content_length = len(body)
+        self.content_encoding = "gzip"
     
     def to_bytes(self) -> bytes:
         """ Generates the final, formatted and encoded HTTP Response."""
@@ -60,6 +68,7 @@ class HttpResponse:
         if self.content_length > 0:
             headers += f"Content-Type: {self.content_type}\r\n"
             headers += f"Content-Length: {self.content_length}\r\n"
+            headers += f"Content-Encoding: {self.content_encoding}\r\n"
         
         response_str = f"{status_line}{headers}\r\n{self.body}"
         return response_str.encode()
