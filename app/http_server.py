@@ -23,7 +23,7 @@ class HttpServer:
         try:
             #Receive data from client
             raw_data = conn.recv(1024).decode()
-            print("============================s")
+            print("============================")
 
             if not raw_data: 
                 print(f"No data received from {addr}")
