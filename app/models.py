@@ -36,7 +36,11 @@ class HttpRequest:
         print(f"headers: {headers}\n")
         
         # Body parsing
-        body = "\r\n".join(lines[header_end_index + 1:])
+        if "user-agent" in headers:
+            body = headers["user-agent"]
+        else:
+            body = "\r\n".join(lines[header_end_index + 1:])
+            
         print(f"body: {body}\n")
         print("\n")
 
