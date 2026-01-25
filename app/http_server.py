@@ -1,3 +1,4 @@
+from pkgutil import resolve_name
 import socket
 import threading
 from typing import Tuple
@@ -36,6 +37,7 @@ class HttpServer:
             
             # 2. Route and Get Response
             response = self.router.route(request)
+            print(f"response in http server: {response} \n")
 
             # 3. Send Response
             conn.sendall(response.to_bytes())

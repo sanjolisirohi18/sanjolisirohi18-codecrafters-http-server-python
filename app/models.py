@@ -127,4 +127,5 @@ class HttpResponse:
         #     headers += f"Content-Encoding: {self.content_encoding}\r\n"
         
         response_str = f"{status_line}{header_lines}\r\n{self.body}\r\n"
+        print(f"response str: {response_str}\n")
         return response_str.encode()
