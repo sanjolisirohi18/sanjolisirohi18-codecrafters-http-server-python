@@ -11,6 +11,7 @@ def handle_root(request: HttpRequest) -> HttpResponse:
 def handle_echo(request: HttpRequest) -> HttpResponse:
     """ Handler for GET /echo/<message> """
     print("handle echo called")
+    print(f"request path: {request.path}")
     path_parts = request.path.split("/", 2)
     message = path_parts[2] if len(path_parts) > 2 else ""
 
