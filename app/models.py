@@ -38,6 +38,7 @@ class HttpRequest:
         # Body parsing
         body = "\r\n".join(lines[header_end_index + 1:])
         print(f"body: {body}\n")
+        print("\n")
 
         # # Parse request line
         # request_line_parts = lines[0].split(" ")
