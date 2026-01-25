@@ -24,8 +24,9 @@ class Router:
         """ Dispatches the request to the correct handler based on the path."""
 
         accept_encoding = request.headers.get("accept-encoding", "")
+        supported_encodings = [e.strip() for e in accept_encoding.split(",")]
         print(f"accept-encoding: {accept_encoding}\n")
-        use_gzip = "gzip" in accept_encoding
+        use_gzip = "gzip" in supported_encodings
         print(f"use_gzip: {use_gzip}\n")
         print(f"request.path: {request.path}\n")
         print(f"request.headers: {request.headers}\n")
