@@ -1,4 +1,5 @@
 from ast import Call
+import gzip
 from pathlib import Path
 from typing import Dict, Callable
 
@@ -24,6 +25,10 @@ class Router:
     def route(self, request: HttpRequest) -> HttpResponse:
         """ Dispatches the request to the correct handler based on the path."""
 
+        accept_encoding = request.headers.get("accept-encoding", "")
+        print(f"accept-encoding: {accept_encoding}\n")
+        use_gzip = "gzip" in accept_encoding
+        print(f"use_gzip: {use_gzip}\n")
         # 1. Check exact matches
         if request.path in self.routes and request.path != "/":
             print("check exact match")
@@ -34,7 +39,12 @@ class Router:
             print("check dynamic prefix")
 
             if prefix != "/" and prefix.endswith("/") and request.path.startswith(prefix):
-                return handler(request)
+                response = handler(request)
+
+                if use_gzip:
+                    response.content_encoding = "gzip"
+
+                return response
         
         # 4. Handle the Root Path
         if request.path == "/":
