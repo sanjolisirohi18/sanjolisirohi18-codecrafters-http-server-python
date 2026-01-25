@@ -1,4 +1,3 @@
-from email import header
 from typing import Optional
 
 class HttpRequest:
@@ -40,40 +39,8 @@ class HttpRequest:
             body = headers["user-agent"]
         else:
             body = "\r\n".join(lines[header_end_index + 1:])
-            
+
         print(f"body: {body}\n")
-        print("\n")
-
-        # # Parse request line
-        # request_line_parts = lines[0].split(" ")
-        # method = request_line_parts[0]
-        # path = request_line_parts[1]
-        # version = request_line_parts[2]
-
-        # # Parse headers
-        # headers = {}
-        # header_data = lines[2].split(":")
-        # print(f"header_data: {header_data}\n")
-        # accept_encoding = header_data[1].strip()
-        # print(f"accept_encoding: {accept_encoding}\n")
-
-        # if len(lines) > 1:
-        #     if header_data[0] == "Accept-Encoding" and accept_encoding in ["gzip"]:
-        #         headers = {
-        #             "Host": lines[1],
-        #             "Accept-Encoding": lines[2]
-        #         }
-        #     else:
-        #         headers = {
-        #             "Host": lines[1],
-        #             #"User-Agent": lines[2].split(" ")[1] if len(lines[2]) > 0 else '',
-        #             #"User-Agent": lines[2]
-        #         }
-        
-        # print(f"headers: {headers}\n")
-
-        # # Parse body
-        # body = lines[-1] if len(lines[-1]) > 0 else ""
 
         return cls(method=method, path=path, headers=headers, body=body)
 
@@ -125,12 +92,5 @@ class HttpResponse:
         # headers = ""
 
         print(f"body: {self.body}")
-        # if self.content_length > 0:
-        #     headers += f"Content-Type: {self.content_type}\r\n"
-        #     headers += f"Content-Length: {self.content_length}\r\n"
-        #     headers += f"Content-Encoding: {self.content_encoding}\r\n"
-        
-        response_str = f"{status_line}{header_lines}\r\n{self.body}\r\n"
-        print(f"response str: {response_str}\n")
-        #return response_str.encode()
+
         return status_line.encode() + header_lines.encode() + b"\r\n\r\n" + body_bytes

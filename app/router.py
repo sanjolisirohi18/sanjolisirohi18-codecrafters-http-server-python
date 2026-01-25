@@ -1,5 +1,3 @@
-from ast import Call
-import gzip
 from pathlib import Path
 from typing import Dict, Callable
 
