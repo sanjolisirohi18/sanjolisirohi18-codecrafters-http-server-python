@@ -67,7 +67,6 @@ class HttpResponse:
         }.get(status_code, "Unknown")
         self.body = body
         self.content_type = content_type
-        self.content_length = len(body)
         self.content_encoding = content_encoding
     
     def to_bytes(self) -> bytes:
@@ -85,7 +84,7 @@ class HttpResponse:
         # Build headers
         header_list = [
             f"Content-Type: {self.content_type}",
-            f"Content-Length: {self.content_length}"
+            f"Content-Length: {len(body_bytes)}"
         ]
 
         if self.content_encoding == "gzip":
@@ -96,7 +95,5 @@ class HttpResponse:
         # headers = ""
 
         print(f"body: {self.body}")
-        header_block = status_line + "\r\n".join(header_list) + "\r\n\r\n"
 
-        #return status_line.encode() + header_lines.encode() + b"\r\n\r\n" + body_bytes
-        return header_block.encode() + body_bytes
+        return status_line.encode() + header_lines.encode() + b"\r\n\r\n" + body_bytes
