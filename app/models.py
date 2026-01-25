@@ -1,4 +1,5 @@
 from typing import Optional
+import gzip
 
 class HttpRequest:
     def __init__(self, method: str, path: str, headers: dict, body: str):
@@ -74,6 +75,9 @@ class HttpResponse:
 
         # Prepare the body content
         body_bytes = self.body.encode()
+
+        if self.content_encoding == "gzip":
+            body_bytes = gzip.compress(body_bytes)
 
         # Build the status line
         status_line = f"HTTP/1.1 {self.status_code} {self.reason_phrase}\r\n"
