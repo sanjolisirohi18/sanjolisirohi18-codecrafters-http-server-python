@@ -30,6 +30,8 @@ class Router:
         use_gzip = "gzip" in accept_encoding
         print(f"use_gzip: {use_gzip}\n")
         print(f"request.path: {request.path}\n")
+        print(f"request.headers: {request.headers}\n")
+        print(f"request.body: {request.body}\n")
         # 1. Check exact matches
         if request.path in self.routes and request.path != "/":
             print("check exact match")
