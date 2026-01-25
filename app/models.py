@@ -117,6 +117,7 @@ class HttpResponse:
             header_list.append(f"Content-Encoding: {self.content_encoding}")
         
         header_lines = "\r\n".join(header_list)
+        print(f"header_lines: {header_lines}\n")
         # headers = ""
 
         print(f"body: {self.body}")
