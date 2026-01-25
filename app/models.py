@@ -128,4 +128,5 @@ class HttpResponse:
         
         response_str = f"{status_line}{header_lines}\r\n{self.body}\r\n"
         print(f"response str: {response_str}\n")
-        return response_str.encode()
+        #return response_str.encode()
+        return status_line.encode() + header_lines.encode() + b"\r\n\r\n" + body_bytes
