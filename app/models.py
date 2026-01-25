@@ -1,47 +1,76 @@
+from email import header
+
+
 class HttpRequest:
-    def __init__(self, method: str, path: str, headers: dict, body: str, accept_encoding: str):
+    def __init__(self, method: str, path: str, headers: dict, body: str):
         self.method = method
         self.path = path
         self.headers = headers
         self.body = body
-        self.accept_encoding = accept_encoding
     
     @classmethod
     def from_raw_data(cls, raw_data:str) -> 'HttpRequest':
         lines = raw_data.split("\r\n")
         print(f"lines: {lines}\n")
 
-        # Parse request line
-        request_line_parts = lines[0].split(" ")
-        method = request_line_parts[0]
-        path = request_line_parts[1]
+        # Request line parsing
+        if not lines or not lines[0]:
+            return cls("", "", {}, "")
+        
+        parts = lines[0]. split(" ")
+        method, path, version = parts[0], parts[1], parts[2]
 
-        # Parse headers
+        # Header parsing
         headers = {}
-        header_data = lines[2].split(":")
-        print(f"header_data: {header_data}\n")
-        accept_encoding = header_data[1].strip()
-        print(f"accept_encoding: {accept_encoding}\n")
+        header_end_index = 0
 
-        if len(lines) > 1:
-            if header_data[0] == "Accept-Encoding" and accept_encoding in ["gzip"]:
-                headers = {
-                    "Host": lines[1],
-                    "Accept-Encoding": lines[2]
-                }
-            else:
-                headers = {
-                    "Host": lines[1],
-                    #"User-Agent": lines[2].split(" ")[1] if len(lines[2]) > 0 else '',
-                    #"User-Agent": lines[2]
-                }
+        for i, line in enumerate(lines[1:]):
+            if not line: # Empty line marks end of headers
+                header_end_index = i + 1
+                break
+
+            if ":" in line:
+                key, value = line.split(":", 1)
+                headers[key.strip().lower()] = value.strip()
         
         print(f"headers: {headers}\n")
+        
+        # Body parsing
+        body = "\r\n".join(lines[header_end_index + 1:])
+        print(f"body: {body}\n")
 
-        # Parse body
-        body = lines[-1] if len(lines[-1]) > 0 else ""
+        # # Parse request line
+        # request_line_parts = lines[0].split(" ")
+        # method = request_line_parts[0]
+        # path = request_line_parts[1]
+        # version = request_line_parts[2]
 
-        return cls(method=method, path=path, headers=headers, body=body, accept_encoding=accept_encoding)
+        # # Parse headers
+        # headers = {}
+        # header_data = lines[2].split(":")
+        # print(f"header_data: {header_data}\n")
+        # accept_encoding = header_data[1].strip()
+        # print(f"accept_encoding: {accept_encoding}\n")
+
+        # if len(lines) > 1:
+        #     if header_data[0] == "Accept-Encoding" and accept_encoding in ["gzip"]:
+        #         headers = {
+        #             "Host": lines[1],
+        #             "Accept-Encoding": lines[2]
+        #         }
+        #     else:
+        #         headers = {
+        #             "Host": lines[1],
+        #             #"User-Agent": lines[2].split(" ")[1] if len(lines[2]) > 0 else '',
+        #             #"User-Agent": lines[2]
+        #         }
+        
+        # print(f"headers: {headers}\n")
+
+        # # Parse body
+        # body = lines[-1] if len(lines[-1]) > 0 else ""
+
+        return cls(method=method, path=path, headers=headers, body=body)
 
 class HttpResponse:
     """ Build and format the http response sent back to the client. """
