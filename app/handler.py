@@ -20,7 +20,7 @@ def handle_echo(request: HttpRequest) -> HttpResponse:
 def handle_user_agent(request: HttpRequest) -> HttpResponse:
     """ Handler for GET /user-agent """
     print("handle user agent called")
-    user_agent = request.headers.get("User-Agent", "")
+    user_agent = request.headers.get("user-agent", "")
     print(f"user_agent: {user_agent}\n")
 
     return HttpResponse(status_code=200, body=user_agent)
