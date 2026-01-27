@@ -69,7 +69,7 @@ class HttpResponse:
         self.content_type = content_type
         self.content_encoding = content_encoding
         self.headers: Dict[str, str] = {
-            "Content-Type": {content_type}
+            "Content-Type": content_type
         }
     
     def to_bytes(self) -> bytes:
