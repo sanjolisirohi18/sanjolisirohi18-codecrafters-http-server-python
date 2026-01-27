@@ -88,21 +88,9 @@ class HttpResponse:
         status_line = f"HTTP/1.1 {self.status_code} {self.reason_phrase}\r\n"
         
         # Build headers
-        # header_list = [
-        #     f"Content-Type: {self.content_type}",
-        #     f"Content-Length: {len(body_bytes)}"
-        # ]
-
         header_lines = ""
         for key, value in self.headers.items():
             header_lines += f"{key}: {value}\r\n"
-
-        # if self.content_encoding == "gzip":
-        #     header_list.append(f"Content-Encoding: {self.content_encoding}")
-        
-        # header_lines = "\r\n".join(header_list)
-        # print(f"header_lines: {header_lines}\n")
-        # headers = ""
 
         print(f"body: {self.body}")
 
