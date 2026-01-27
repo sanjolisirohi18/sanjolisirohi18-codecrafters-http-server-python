@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Dict
 import gzip
 
 class HttpRequest:
@@ -68,6 +68,9 @@ class HttpResponse:
         self.body = body
         self.content_type = content_type
         self.content_encoding = content_encoding
+        self.headers: Dict[str, str] = {
+            "Content-Type": {content_type}
+        }
     
     def to_bytes(self) -> bytes:
         """ Generates the final, formatted and encoded HTTP Response."""
@@ -77,21 +80,28 @@ class HttpResponse:
 
         if self.content_encoding == "gzip":
             body_bytes = gzip.compress(body_bytes)
+            self.headers["Content-Encoding"] = self.content_encoding
+        
+        self.headers["Content-Length"] = str(len(body_bytes))
 
         # Build the status line
         status_line = f"HTTP/1.1 {self.status_code} {self.reason_phrase}\r\n"
         
         # Build headers
-        header_list = [
-            f"Content-Type: {self.content_type}",
-            f"Content-Length: {len(body_bytes)}"
-        ]
+        # header_list = [
+        #     f"Content-Type: {self.content_type}",
+        #     f"Content-Length: {len(body_bytes)}"
+        # ]
 
-        if self.content_encoding == "gzip":
-            header_list.append(f"Content-Encoding: {self.content_encoding}")
+        header_lines = ""
+        for key, value in self.headers.items():
+            header_lines += f"{key}: {value}\r\n"
+
+        # if self.content_encoding == "gzip":
+        #     header_list.append(f"Content-Encoding: {self.content_encoding}")
         
-        header_lines = "\r\n".join(header_list)
-        print(f"header_lines: {header_lines}\n")
+        # header_lines = "\r\n".join(header_list)
+        # print(f"header_lines: {header_lines}\n")
         # headers = ""
 
         print(f"body: {self.body}")
