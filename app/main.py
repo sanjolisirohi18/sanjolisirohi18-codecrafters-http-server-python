@@ -9,7 +9,6 @@ def main():
 
     print(f"Input arguments: {sys.argv}\n")
     directory_path = Path(".")
-    # #directory_path = Path(sys.argv[-1])
 
     if len(sys.argv) > 2 and sys.argv[1] == "--directory":
         directory_path = sys.argv[2]

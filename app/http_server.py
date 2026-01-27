@@ -19,29 +19,49 @@ class HttpServer:
         """ Reads, processes and responds to a single client connection. """
 
         print(f"Accepted connection from {addr}")
+        conn.settimeout(5.0)
 
         try:
-            #Receive data from client
-            raw_data = conn.recv(1024).decode()
-            print("============================")
+            while True:
+                try:
+                    #Receive data from client
+                    raw_data = conn.recv(4096).decode()
+                    print("============================")
 
-            if not raw_data: 
-                print(f"No data received from {addr}")
-                return
-            
-            print(f"data: {raw_data} \n")
+                    if not raw_data: 
+                        print(f"No data received from {addr}")
+                        return
+                    
+                    print(f"data: {raw_data} \n")
 
-            # 1. Parse Request
-            request = HttpRequest.from_raw_data(raw_data)
-            
-            # 2. Route and Get Response
-            response = self.router.route(request)
-            print(f"response in http server: {response} \n")
+                    # 1. Parse Request
+                    request = HttpRequest.from_raw_data(raw_data)
+                    
+                    # 2. Route and Get Response
+                    response = self.router.route(request)
+                    print(f"response in http server: {response} \n")
 
-            # 3. Send Response
-            conn.sendall(response.to_bytes())
-        except Exception as e:
-            print(f"Error handling client: {e}")
+                    # 3. Handle 'Connection' header logic
+                    client_wants_close = request.headers.get("connection") == "close"
+                    print(f"client wants close: {client_wants_close}")
+
+                    # Add Keep-Alive or Close header to our response
+                    if client_wants_close:
+                        response.headers["Connection"] = "close"
+                    else:
+                        response.headers["Connection"] = "keep-alive"
+
+                    # 4. Send Response
+                    conn.sendall(response.to_bytes())
+
+                    # 5. Exit loop if client requested closure
+                    if client_wants_close:
+                        break
+                except socket.timeout:
+                    print(f"Connection timeout for {addr}")
+                    break
+                except Exception as e:
+                    print(f"Error handling client: {e}")
         finally:
             # Close connection when done
             conn.close()
