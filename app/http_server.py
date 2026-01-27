@@ -44,6 +44,7 @@ class HttpServer:
                     # 3. Handle 'Connection' header logic
                     client_wants_close = request.headers.get("connection") == "close"
                     print(f"client wants close: {client_wants_close}")
+                    print("\n")
 
                     # Add Keep-Alive or Close header to our response
                     if client_wants_close:
